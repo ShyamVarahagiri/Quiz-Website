@@ -1,17 +1,9 @@
 import React, { useEffect, useState } from 'react';
-
-type optionProps = {
-	value: string,     // Option string
-	correct: boolean,  // Whether the option is a correct answer
-	index: number,     // Question number
-	selected: string,  // Currently selected option
-}
-
+import type { optionProps } from '../scripts/types'
 
 function Option(props: optionProps) {
 	const [className, setClassName] = useState("question");
 	const { selected, value, index, correct } = props;
-
 	useEffect(() => {
 		function computeClassName(): string {
 
@@ -20,6 +12,7 @@ function Option(props: optionProps) {
 		}
 
 		if (selected === "") { return; }
+
 		setClassName(computeClassName())
 
 	}, [selected, correct, value]);

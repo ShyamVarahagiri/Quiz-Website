@@ -1,10 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import Question from './Questions'
-
-type Answer = {
-    c: string[],
-    w: string[],
-};
+import type { Answer } from '../scripts/types'
 
 
 const questions: { [key: string]: Answer }[] = [ // Store all Question --> Answer pairs as an object

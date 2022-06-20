@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Option from './Options'
-import shuffleArray from './shuffleArray';
-
-
-type Answer = {
-    c: string[],
-    w: string[],
-};
-
-type questionProps = {
-    data: { [key: string]: Answer },
-    index: number,
-    selected: string
-};
+import shuffleArray from '../scripts/helper/shuffleArray';
+import type { questionProps } from '../scripts/types'
 
 
 function Question(props: questionProps) {
