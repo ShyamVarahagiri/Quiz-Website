@@ -4,7 +4,7 @@ import shuffleArray from '../scripts/helper/shuffleArray';
 import type { questionProps } from '../scripts/types'
 
 
-function Question(props: questionProps) {
+const Question = (props: questionProps) => {
 
     const { index } = props;
     const opt = props.data[Object.keys(props.data)[0]];

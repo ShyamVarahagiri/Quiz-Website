@@ -1,6 +1,7 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import Question from './Questions'
 import type { Answer } from '../scripts/types'
+
 
 
 const questions: { [key: string]: Answer }[] = [ // Store all Question --> Answer pairs as an object
@@ -11,22 +12,48 @@ const questions: { [key: string]: Answer }[] = [ // Store all Question --> Answe
     { "What is the default port where webpack-server runs?": { c: ["8080"], w: ["3000", "3030", "6060"] } },
 ];
 
-function Quiz(props: any) {
+const Quiz = (props: any) => {
 
     const [ques] = useState<{ [key: string]: Answer }[]>(questions);
     const [submit, setSubmit] = useState(false);
     const [score, setScore] = useState<number | null>(null);
+    const [data, setData] = useState<Object[] | null>(null);
+    const [q, setQ] = useState<{ [key: string]: Answer }[]>([]);
+    const [loaded, setLoad] = useState(false);
+
+    useEffect(() => {
+        fetch('https://the-trivia-api.com/api/questions?limit=15&region=IN')
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data);
+            })
+    }, []);
+
+    useEffect(() => {
+        if (!data) { return; }
+        data.forEach((element: any) => {
+            let question: string = element.question;
+            let correct: string = element.correctAnswer;
+            let wrong: string[] = element.incorrectAnswers;
+            let obj: { [key: string]: Answer } = {};
+            obj[question] = { c: [correct], w: wrong };
+            q.push(obj);
+        });
+        setQ(q);
+        setLoad(true);
+    }, [data]);
+
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
         let score = 0;
 
-        for (let i = 0; i < ques.length; i++) {
+        for (let i = 0; i < q.length; i++) {
             try {
                 let inp: HTMLInputElement | null = document.querySelector("input[name=" + CSS.escape(i.toString()) + "]:checked");
                 if (inp === null) { throw new TypeError(); }
-                if (inp.value === Object.values(ques[i])[0].c[0]) { score++; }
+                if (inp.value === Object.values(q[i])[0].c[0]) { score++; }
             } // Try/Catch to check if all options have been selected at form submit
             catch {
                 alert("All options must be selected!");
@@ -41,18 +68,21 @@ function Quiz(props: any) {
         setScore(score);
     }
 
-    return (
-        <div className="main">
-            <h1>React Quiz</h1>
-            <form className='Quiz' onSubmit={handleSubmit}>
-                {ques.map((element, index) => {
-                    const input: any = document.querySelector("input[name=" + CSS.escape(index.toString()) + "]:checked");
-                    return <Question data={element} index={index} selected={(submit) ? input.value : ""} />
-                })}
-                <div className='Submit'><button type="submit" id='submit'>{(score !== null) ? <span>Score: {score} / {ques.length}</span> : "Submit"}</button></div>
-            </form>
-        </div>
-    )
+    if (loaded) {
+        return (
+            <div className="main">
+                <h1>React Quiz</h1>
+                <form className='Quiz' onSubmit={handleSubmit}>
+                    {q.map((element, index) => {
+                        const input: any = document.querySelector("input[name=" + CSS.escape(index.toString()) + "]:checked");
+                        return <Question data={element} index={index} selected={(submit) ? input.value : ""} />
+                    })}
+                    <div className='Submit'><button type="submit" id='submit'>{(score !== null) ? <span>Score: {score} / {q.length}</span> : "Submit"}</button></div>
+                </form>
+            </div>
+        )
+    }
+    else { return (<div></div>) }
 }
 
 export default Quiz;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import type { optionProps } from '../scripts/types'
 
-function Option(props: optionProps) {
+const Option = (props: optionProps) => {
 	const [className, setClassName] = useState("question");
 	const { selected, value, index, correct } = props;
 	useEffect(() => {
