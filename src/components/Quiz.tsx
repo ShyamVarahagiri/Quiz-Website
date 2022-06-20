@@ -71,7 +71,7 @@ const Quiz = (props: any) => {
             </div>
         )
     }
-    else { return (<div>Loading...</div>) }
+    else { return (<div>Loading...</div>) } // Loading screen while waiting for API
 }
 
 export default Quiz;
