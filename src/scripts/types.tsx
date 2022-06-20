@@ -5,19 +5,22 @@ type optionProps = {
     selected: string,  // Currently selected option
 }
 
-type Answer = {
+type answer = {
     c: string[],
     w: string[],
 };
 
 type questionProps = {
-    data: { [key: string]: Answer },
+    data: { [key: string]: answer },
     index: number,
     selected: string
 };
 
+type question = { [key: string]: answer; }
+
 export type {
     optionProps,
-    Answer,
-    questionProps
+    answer,
+    questionProps,
+    question
 };
