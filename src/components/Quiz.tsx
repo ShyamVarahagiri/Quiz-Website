@@ -4,17 +4,8 @@ import type { Answer } from '../scripts/types'
 
 
 
-const questions: { [key: string]: Answer }[] = [ // Store all Question --> Answer pairs as an object
-    { "Which of the following command is used to install create-react-app?": { c: ["npm install -g create-react-app"], w: ["npm install create-react-app", "npm install -f create-react-app", "install -g create-react-app"] } },
-    { "What of the following is used in React.js to increase performance?": { c: ["Virtual DOM"], w: ["Original DOM", "Both the options", "None of the options"] } },
-    { "How many numbers of elements a valid react component can return?": { c: ["1"], w: ["2", "3", "4"] } },
-    { "Which of the following acts as the input of a class-based component?": { c: ["Props"], w: ["Class", "Factory", "Render"] } },
-    { "What is the default port where webpack-server runs?": { c: ["8080"], w: ["3000", "3030", "6060"] } },
-];
-
 const Quiz = (props: any) => {
 
-    const [ques] = useState<{ [key: string]: Answer }[]>(questions);
     const [submit, setSubmit] = useState(false);
     const [score, setScore] = useState<number | null>(null);
     const [data, setData] = useState<Object[] | null>(null);
@@ -41,7 +32,7 @@ const Quiz = (props: any) => {
         });
         setQ(q);
         setLoad(true);
-    }, [data]);
+    }, [data, q]);
 
 
     function handleSubmit(event: FormEvent) {
