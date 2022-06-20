@@ -1,6 +1,6 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import Question from './Questions'
-import type { Answer } from '../scripts/types'
+import type { question, answer } from '../scripts/types'
 
 
 
@@ -9,7 +9,7 @@ const Quiz = (props: any) => {
     const [submit, setSubmit] = useState(false);
     const [score, setScore] = useState<number | null>(null);
     const [data, setData] = useState<Object[] | null>(null);
-    const [questions, setQuestion] = useState<{ [key: string]: Answer }[]>([]);
+    const [questions, setQuestion] = useState<{ [key: string]: answer }[]>([]);
     const [loaded, setLoad] = useState(false);
 
     useEffect(() => { // Fetching API data
@@ -22,13 +22,10 @@ const Quiz = (props: any) => {
 
     useEffect(() => { // Formatting API data to pass as props
         if (!data) { return; } // Wait for API fetch
-        const arr: React.SetStateAction<{ [key: string]: Answer; }[]> = [];
+        const arr: question[] = [];
         data.forEach((element: any) => {
-            let question: string = element.question;
-            let correct: string = element.correctAnswer;
-            let wrong: string[] = element.incorrectAnswers;
-            let obj: { [key: string]: Answer } = {};
-            obj[question] = { c: [correct], w: wrong };
+            let obj: question = {};
+            obj[element.question] = { c: [element.correctAnswer], w: element.incorrectAnswers };
             arr.push(obj);
         });
         setQuestion(arr);
