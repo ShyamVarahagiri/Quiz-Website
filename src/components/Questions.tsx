@@ -6,12 +6,12 @@ import type { questionProps } from '../scripts/types'
 
 const Question = (props: questionProps) => {
 
-    const { index, data } = props;
+    const { index, data, select, setScore } = props; // Destructuring props object
 
     const [question, setQuestion] = useState("");
     const [correct, setCorrect] = useState([""]);
     const [options, setOptions] = useState([""]);
-    const [selected, setSelected] = useState(props.selected);
+    const [selected, setSelected] = useState(select);
 
     useEffect(() => {
         setQuestion(data.question);
@@ -21,12 +21,12 @@ const Question = (props: questionProps) => {
     }, [data.correctAnswer, data.incorrectAnswers, data.question])
 
     useEffect(() => {
-        if (props.selected === "") { return; }
-        setSelected(props.selected);
+        if (select === "") { return; }
+        setSelected(select);
 
-        if (props.selected === correct[0]) { props.setScore(); console.log("increment") }
+        if (select === correct[0]) { setScore(); console.log("increment") }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.selected]);
+    }, [select]);
 
 
     return (

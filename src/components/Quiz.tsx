@@ -1,7 +1,5 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import Question from './Questions'
-import type { question, answer } from '../scripts/types'
-
 
 
 const Quiz = (_props: any) => {
@@ -11,7 +9,7 @@ const Quiz = (_props: any) => {
     const [data, setData] = useState<any>([]);
     const [loaded, setLoad] = useState(false);
 
-    function increment() {
+    function increment() { // Update score if answer is correct
         setScore(score => (score === null) ? 1 : score + 1);
     }
 
@@ -40,7 +38,7 @@ const Quiz = (_props: any) => {
         } // After validation count the quiz score
 
         const submitButton: any = document.getElementById("submit");
-        submitButton.disabled = true;
+        submitButton.disabled = true; // Disable further form inputs
 
         setSubmit(true);
     }
@@ -52,7 +50,7 @@ const Quiz = (_props: any) => {
                 <form className='Quiz' onSubmit={handleSubmit}>
                     {data.map((element: any, index: number) => {
                         const input: any = document.querySelector("input[name=" + CSS.escape(index.toString()) + "]:checked");
-                        return <Question data={element} index={index} selected={(submit) ? input.value : ""} setScore={increment} />
+                        return <Question data={element} index={index} select={(submit) ? input.value : ""} setScore={increment} />
                     })}
                     <div className='Submit'><button type="submit" id='submit'>{(score !== null) ? <span>Score: {score} / {data.length}</span> : "Submit"}</button></div>
                 </form>
