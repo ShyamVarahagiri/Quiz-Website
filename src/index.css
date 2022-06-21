@@ -24,38 +24,10 @@ h1 {
   text-align: center;
 }
 
-.Question {
-  text-align: left;
-  background-color: #FCE38A;
-  width: 75%;
-  padding: 1em;
-  padding-top: 0.4rem;
-  margin: 1rem auto;
-  border-radius: 2rem;
-  border: 0.1rem solid #EAFFD0;
-}
-
-.Question:nth-last-child() {
-  margin-bottom: 0px;
-}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-button {
-  margin-bottom: 0.8rem;
-  text-align: center;
-  background-color: #FCE38A;
-  color: #000000;
-  height: 4.5rem;
-  width: 13.5rem;
-  padding: 1rem 2.5rem;
-  border: 0.2rem solid #EAFFD0;
-  font-weight: bold;
-  font-size: 1.2rem;
-  border-radius: 1.5rem;
 }
 
 h4 {
@@ -70,9 +42,7 @@ li {
 }
 
 @media (max-width: 510px) {
-  .Question {
-    width: 77%;
-  }
+
 
   li {
     margin: 0.8rem 0.5rem;
@@ -86,10 +56,6 @@ li {
 }
 
 @media (max-width: 450px) {
-  .Question {
-    width: 80%
-  }
-
   li {
     margin: 0.8rem 0.1rem;
     padding: 0;
@@ -115,32 +81,11 @@ li {
   .question {
     padding: 0;
   }
-
-  .Question {
-    padding: 0.5rem;
-    width: 85%;
-  }
-}
-
-@media (max-width: 330px) {
-  .Question {
-    width: 90%;
-  }
-}
-
-@media (max-width: 275px) {
-  .Question {
-    width: 95%;
-  }
 }
 
 label {
   border-radius: 0.5em;
   padding: 0.25rem 0.6rem;
-}
-
-button:hover {
-  background-color: #F38181;
 }
 
 .question {

@@ -1,5 +1,6 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import Question from './Questions'
+import { SButton } from '../scripts/styles'
 
 
 const Quiz = (_props: any) => {
@@ -52,7 +53,7 @@ const Quiz = (_props: any) => {
                         const input: any = document.querySelector("input[name=" + CSS.escape(index.toString()) + "]:checked");
                         return <Question data={element} index={index} select={(submit) ? input.value : ""} setScore={increment} />
                     })}
-                    <div className='Submit'><button type="submit" id='submit'>{(score !== null) ? <span>Score: {score} / {data.length}</span> : "Submit"}</button></div>
+                    <div className='Submit'><SButton type="submit" id='submit'>{(score !== null) ? <span>Score: {score} / {data.length}</span> : "Submit"}</SButton></div>
                 </form>
             </div>
         )

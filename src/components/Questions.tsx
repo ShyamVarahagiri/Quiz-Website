@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Option from './Options'
 import shuffleArray from '../scripts/helper/shuffleArray';
+import { Wrapper } from '../scripts/styles'
 import type { questionProps } from '../scripts/types'
 
 
@@ -30,14 +31,14 @@ const Question = (props: questionProps) => {
 
 
     return (
-        <div className='Question'>
+        <Wrapper>
             <h4>{index + 1}. {question}</h4>
             <ul className="answers" >
                 {options.map((element) => {
                     return <Option value={element} correct={element === correct[0]} index={index} selected={selected} />
                 })}
             </ul>
-        </div>
+        </Wrapper>
     )
 }
 
