@@ -6,21 +6,32 @@ import type { questionProps } from '../scripts/types'
 
 const Question = (props: questionProps) => {
 
-    const { index } = props;
-    const opt = props.data[Object.keys(props.data)[0]];
+    const { index, data } = props;
 
-    const [correct] = useState(opt.c);
-    const [options] = useState(shuffleArray(opt.c.concat(opt.w)));
+    const [question, setQuestion] = useState("");
+    const [correct, setCorrect] = useState([""]);
+    const [options, setOptions] = useState([""]);
     const [selected, setSelected] = useState(props.selected);
 
     useEffect(() => {
+        setQuestion(data.question);
+        setCorrect([data.correctAnswer]);
+        setOptions(shuffleArray([data.correctAnswer].concat(data.incorrectAnswers)));
+
+    }, [data.correctAnswer, data.incorrectAnswers, data.question])
+
+    useEffect(() => {
+        if (props.selected === "") { return; }
         setSelected(props.selected);
+
+        if (props.selected === correct[0]) { props.setScore(); console.log("increment") }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.selected]);
 
 
     return (
         <div className='Question'>
-            <h4>{index + 1}. {Object.keys(props.data)[0]}</h4>
+            <h4>{index + 1}. {question}</h4>
             <ul className="answers" >
                 {options.map((element) => {
                     return <Option value={element} correct={element === correct[0]} index={index} selected={selected} />
