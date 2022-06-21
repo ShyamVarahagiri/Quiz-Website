@@ -11,9 +11,10 @@ type answer = {
 };
 
 type questionProps = {
-    data: { [key: string]: answer },
+    data: { question: string, correctAnswer: string, incorrectAnswers: string[] },
     index: number,
     selected: string
+    setScore: () => void
 };
 
 type question = { [key: string]: answer; }
