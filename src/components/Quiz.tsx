@@ -4,45 +4,34 @@ import type { question, answer } from '../scripts/types'
 
 
 
-const Quiz = (props: any) => {
+const Quiz = (_props: any) => {
 
     const [submit, setSubmit] = useState(false);
     const [score, setScore] = useState<number | null>(null);
-    const [data, setData] = useState<Object[] | null>(null);
-    const [questions, setQuestion] = useState<{ [key: string]: answer }[]>([]);
+    const [data, setData] = useState<any>([]);
     const [loaded, setLoad] = useState(false);
+
+    function increment() {
+        setScore(score => (score === null) ? 1 : score + 1);
+    }
 
     useEffect(() => { // Fetching API data
         fetch('https://the-trivia-api.com/api/questions?limit=10&region=IN')
             .then((res) => res.json())
             .then((data) => {
                 setData(data);
+                setLoad(true);
             })
     }, []);
-
-    useEffect(() => { // Formatting API data to pass as props
-        if (!data) { return; } // Wait for API fetch
-        const arr: question[] = [];
-        data.forEach((element: any) => {
-            let obj: question = {};
-            obj[element.question] = { c: [element.correctAnswer], w: element.incorrectAnswers };
-            arr.push(obj);
-        });
-        setQuestion(arr);
-        setLoad(true);
-    }, [data]);
 
 
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
-        let score = 0;
-
-        for (let i = 0; i < questions.length; i++) {
+        for (let i = 0; i < data.length; i++) {
             try {
                 let inp: HTMLInputElement | null = document.querySelector("input[name=" + CSS.escape(i.toString()) + "]:checked");
                 if (inp === null) { throw new TypeError(); }
-                if (inp.value === Object.values(questions[i])[0].c[0]) { score++; }
             } // Try/Catch to check if all options have been selected at form submit
             catch {
                 alert("All options must be selected!");
@@ -54,7 +43,6 @@ const Quiz = (props: any) => {
         submitButton.disabled = true;
 
         setSubmit(true);
-        setScore(score);
     }
 
     if (loaded) {
@@ -62,11 +50,11 @@ const Quiz = (props: any) => {
             <div className="main">
                 <h1>React Quiz</h1>
                 <form className='Quiz' onSubmit={handleSubmit}>
-                    {questions.map((element, index) => {
+                    {data.map((element: any, index: number) => {
                         const input: any = document.querySelector("input[name=" + CSS.escape(index.toString()) + "]:checked");
-                        return <Question data={element} index={index} selected={(submit) ? input.value : ""} />
+                        return <Question data={element} index={index} selected={(submit) ? input.value : ""} setScore={increment} />
                     })}
-                    <div className='Submit'><button type="submit" id='submit'>{(score !== null) ? <span>Score: {score} / {questions.length}</span> : "Submit"}</button></div>
+                    <div className='Submit'><button type="submit" id='submit'>{(score !== null) ? <span>Score: {score} / {data.length}</span> : "Submit"}</button></div>
                 </form>
             </div>
         )
