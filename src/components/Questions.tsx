@@ -13,7 +13,7 @@ const Question = (props: questionProps) => {
     const [options, setOptions] = useState([""]);
     const [selected, setSelected] = useState(select);
 
-    useEffect(() => {
+    useEffect(() => { // Formatting data
         setQuestion(data.question);
         setCorrect([data.correctAnswer]);
         setOptions(shuffleArray([data.correctAnswer].concat(data.incorrectAnswers)));
