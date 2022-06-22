@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import type { labelProps } from './types';
+
 
 const SButton = styled.button`
   margin-bottom: 0.8rem;
@@ -17,6 +19,7 @@ const SButton = styled.button`
     background-color: #F38181;
   }
 `;
+
 
 const Wrapper = styled.div`
   text-align: left;
@@ -48,4 +51,20 @@ const Wrapper = styled.div`
     }
 `;
 
-export { SButton, Wrapper };
+
+const Label = styled.label<labelProps>`
+  color: #000000;
+
+  ${props => {
+    if (!props.submitted) { return `` }
+
+    if (props.correct) { return 'background-color: rgb(0, 175, 0);' }
+    else { return (props.selected) ? 'background-color: red;' : '' }
+  }}
+
+  @media (max-width: 390px) {
+    padding: 0;
+  }
+`
+
+export { SButton, Wrapper, Label };

@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import type { optionProps } from '../scripts/types'
+import { Label } from '../scripts/styles';
+import type { optionProps } from '../scripts/types';
 
 const Option = (props: optionProps) => {
-	const [className, setClassName] = useState("question");
+	const [submit, setSubmit] = useState(false);
+	const [select, setSelect] = useState(false);
 	const { selected, value, index, correct } = props;
+
 	useEffect(() => {
-		function computeClassName(): string {
-
-			if (correct) { return "correct"; }
-			else { return (selected === value) ? "wrong" : "question"; }
-		}
-
 		if (selected === "") { return; }
 
-		setClassName(computeClassName())
+		setSelect(selected === value);
+		setSubmit(true);
 
-	}, [selected, correct, value]);
+	}, [selected, value]);
 
 	return (
 		<li key={value}>
-			<label className={className}>
+			<Label selected={select} submitted={submit} correct={correct} >
 				<input type="radio" value={value} name={index.toString()} />
 				{value}
-			</label>
+			</Label>
 		</li>
 	);
 }

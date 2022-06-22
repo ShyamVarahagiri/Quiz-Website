@@ -5,10 +5,12 @@ type optionProps = {
     selected: string,  // Currently selected option
 }
 
+
 type answer = {
     c: string[],
     w: string[],
 };
+
 
 type questionProps = {
     data: { question: string, correctAnswer: string, incorrectAnswers: string[] },
@@ -17,11 +19,21 @@ type questionProps = {
     setScore: () => void
 };
 
+
 type question = { [key: string]: answer; }
+
+
+type labelProps = {
+    selected: boolean,
+    submitted: boolean,
+    correct: boolean
+};
+
 
 export type {
     optionProps,
     answer,
     questionProps,
-    question
+    question,
+    labelProps
 };
