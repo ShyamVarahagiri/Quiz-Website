@@ -8,7 +8,7 @@ const Option = (props: optionProps) => {
 	const { selected, value, index, correct } = props;
 
 	useEffect(() => {
-		if (selected === "") { return; }
+		if (selected === "") { return; } // Skip initial rendering
 
 		setSelect(selected === value);
 		setSubmit(true);
@@ -26,41 +26,3 @@ const Option = (props: optionProps) => {
 }
 
 export default Option;
-
-/* class Option extends React.Component<optionProps, optionState>{
-
-	constructor(props: optionProps) {
-		super(props);
-		this.state = {
-			className: "question"
-		}
-	}
-
-	computeClassName(): string {
-		const { correct, selected, value } = this.props;
-
-		if (correct) { return "correct"; }
-		else { return (selected === value) ? "wrong" : "question"; }
-	}
-
-	componentDidUpdate(prevProps: optionProps) {
-		if (prevProps.selected !== this.props.selected) {
-			this.setState({
-				className: this.computeClassName()
-			})
-		}
-	}
-
-	render() {
-		const { value, index } = this.props;
-		const { className } = this.state;
-		return (
-			<li key={value}>
-				<label className={className}>
-					<input type="radio" value={value} name={index.toString()} />
-					{value}
-				</label>
-			</li>
-		)
-	}
-} */
